@@ -7,6 +7,7 @@
 | 폴더 | 기술 | 사용처 |
 |------|------|--------|
 | `javascript/` | JavaScript | 기초 개념 및 Web API |
+| `css/` | CSS | 스타일링 패턴 및 주의사항 |
 | `typescript/` | TypeScript | KREAM 웹, KREAM Pay 공통 |
 | `nuxt3/` | Nuxt 3 | KREAM 웹 서비스 |
 | `nextjs/` | Next.js 16+ | KREAM Pay 서비스 |
