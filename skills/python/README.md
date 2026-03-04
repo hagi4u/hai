@@ -5,6 +5,10 @@
 ## 주요 사용처
 - kream 어드민 API 서버
 
+## 스택
+- Framework: Flask
+- Package Manager: uv
+
 ## 빠른 참조
 - 패턴 → `patterns.md`
 - 주의사항 → `gotchas.md`

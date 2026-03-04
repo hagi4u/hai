@@ -17,6 +17,10 @@
 - TypeScript
 - Next.js 16+
 
+### kream 어드민
+- 어드민 UI: Vue
+- API 서버: Python (Flask, uv)
+
 ## 관심사
 - FE 기술 트렌드 및 최신 소식
 - Sub Agent / Agentic AI 활용 사례 (팀 구성, 워크플로우 등)
