@@ -15,6 +15,13 @@
 | `react/` | React | Next.js 기반 |
 | `platforms/` | Android / iOS 제약사항 | TPM 역할 수행 시 참조 |
 | `python/` | Python | kream 어드민 API 서버 |
+| `review.md` | 회고 방법론 | Weekly 기반 자동 회고 |
+
+## 워크플로우 스킬
+
+| 스킬 | 설명 | 사용법 |
+|------|------|--------|
+| 회고 | Weekly Notion 기반 주간 회고 | `/회고` |
 
 ## 파일 구조 (각 기술 공통)
 
