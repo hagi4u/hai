@@ -48,3 +48,17 @@
 - `skills/javascript/patterns.md` — Int32Array 개념 추가
 - `works/goals/2026.md` — 연간 목표 및 Action Items 정리
 - `~/.claude/CLAUDE.md` — 글로벌 컨텍스트 설정으로 모든 프로젝트에서 hai 로드
+
+### W11 (2026-03-09)
+
+#### 사용자 파악
+- 회사 닉네임: Bobby → 캘린더에서 `[1on1] bobby` = 본인 일정
+- Yuki = 1on1 상대방 (매주 월요일 11:00)
+
+#### 행동 개선
+- 아침 인사 시 오늘 캘린더 일정 + 안읽은 메일 브리핑을 함께 제공하기로 함
+- 아침 브리핑 포맷: 📅 오늘 일정 → 🚨 확인 필요 → 🔀 PR 알림 → 📦 배포 → 📋 기타
+
+#### 지식/역할 확장
+- Naver Works MCP로 캘린더 조회 및 메일 브리핑 가능 확인
+- Naver Works MCP 메일 삭제 기능은 미지원 (read/unread, 중요 표시만 가능)
