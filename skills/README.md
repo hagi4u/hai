@@ -16,6 +16,7 @@
 | `platforms/` | Android / iOS 제약사항 | TPM 역할 수행 시 참조 |
 | `python/` | Python | kream 어드민 API 서버 |
 | `bff/` | BFF 패턴 | KREAM Pay BFF ↔ Pay BE 통신 |
+| `infra/` | 인프라 | Kubernetes, 서비스 메시, Istio |
 | `review.md` | 회고 방법론 | Weekly 기반 자동 회고 |
 
 ## 워크플로우 스킬
