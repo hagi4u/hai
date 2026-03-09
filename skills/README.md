@@ -17,6 +17,7 @@
 | `python/` | Python | kream 어드민 API 서버 |
 | `bff/` | BFF 패턴 | KREAM Pay BFF ↔ Pay BE 통신 |
 | `infra/` | 인프라 | Kubernetes, 서비스 메시, Istio |
+| `testing/` | 테스트 전략 | E2E 모범사례, Playwright (Nuxt3/Next.js 공통) |
 | `review.md` | 회고 방법론 | Weekly 기반 자동 회고 |
 
 ## 워크플로우 스킬
