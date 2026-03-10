@@ -9,6 +9,7 @@
 | `android.md` | Android 플랫폼 제약사항 |
 | `ios.md` | iOS 플랫폼 제약사항 |
 | `biometric-webview.md` | iOS/Android 생체인식 × 웹뷰 연동 (크림페이 결제 인증) |
+| `jira.md` | Naver Corp Jira API 사용 시 주의사항 (이슈 타입, 링크 타입 등) |
 
 ## 활용 방법
 
