@@ -5,35 +5,37 @@ SFE 데모 발표를 위한 Confluence 문서 생성부터, 기획문서 기반 
 ## 사용법
 
 ```
-/demo <branch> <title> [prd_url]
-/demo <branch> <confluence_url> [prd_url]
+/demo
 ```
 
-**새 문서 생성 (기획문서 포함):**
-```
-/demo feature/KREAM-40960 "[26.x] 홈 탭 이미지 대응" https://wiki.navercorp.com/...pageId=1234
-```
+입력하면 아래 정보를 순서대로 물어본다:
 
-**새 문서 생성 (기획문서 없이):**
-```
-/demo feature/KREAM-40960 "[26.x] 홈 탭 이미지 대응"
-```
+1. **문서 타이틀** — Confluence 페이지 제목 (예: `[26.x] 홈 탭 이미지 대응`)
+   - 기존 문서 URL을 입력하면 업데이트 모드로 전환
+2. **Git branch** — 피처 브랜치명 (예: `feature/KREAM-40960`)
+3. **기획문서 URL** — Confluence 기획문서 URL (없으면 "없음" 또는 엔터)
 
-**기존 문서 업데이트:**
-```
-/demo feature/KREAM-40960 https://wiki.navercorp.com/...pageId=4888182406
-```
+### 모드 판별
 
-## 입력
-
-| 파라미터 | 설명 | 필수 |
-|----------|------|------|
-| `branch` | 피처 브랜치명 (예: `feature/KREAM-40960`) | ✅ |
-| `title` 또는 `confluence_url` | 새 문서 제목(따옴표) 또는 기존 문서 URL | ✅ |
-| `prd_url` | 기획문서 Confluence URL. 제공 시 1~3 섹션도 자동 작성 | ❌ |
-
-- 두 번째 인자가 `http`로 시작하면 → **기존 문서 업데이트** 모드
+- 타이틀에 `http`가 포함되면 → **기존 문서 업데이트** 모드
 - 그 외 → **새 문서 생성** 모드
+
+### 입력 예시
+
+```
+🤖 데모 발표자료를 준비할게요! 아래 정보를 알려주세요.
+
+1. 📄 문서 타이틀 (또는 기존 문서 URL):
+2. 🔀 Git branch:
+3. 📋 기획문서 URL (없으면 엔터):
+```
+
+```
+사용자:
+1. [26.x] 홈 탭 이미지 대응
+2. feature/KREAM-40960
+3. https://wiki.navercorp.com/pages/viewpage.action?pageId=1234
+```
 
 ## 작동 방식
 
@@ -48,7 +50,7 @@ git diff origin/develop...origin/<branch> -- <target>/   # 상세 diff
 ```
 - diff를 기능 단위로 그룹핑 (타입/컴포넌트/composable/스타일/로깅/설정)
 
-**B) 기획문서 분석** (prd_url 제공 시)
+**B) 기획문서 분석** (URL 제공 시)
 - `confluence_get_page` (convert_to_markdown: true) → 기획문서 내용 파싱
 - 추출 대상:
   - 프로젝트 배경 및 목적
@@ -57,7 +59,7 @@ git diff origin/develop...origin/<branch> -- <target>/   # 상세 diff
   - 기획자와 합의된 스펙 사항
   - 제외 범위 (out of scope)
 
-**C) 기존 문서 읽기** (URL 모드일 때)
+**C) 기존 문서 읽기** (업데이트 모드일 때)
 - `confluence_get_page` (convert_to_markdown: false) → 원본 storage HTML 확보
 
 ### Step 2: 문서 작성
@@ -66,7 +68,7 @@ git diff origin/develop...origin/<branch> -- <target>/   # 상세 diff
 
 `confluence_create_page`로 KREAM 스페이스에 문서 생성 (content_format: "storage")
 
-**prd_url 있을 때 — 1~3 섹션 자동 작성:**
+**기획문서 URL 있을 때 — 1~4 섹션 자동 작성:**
 
 | 섹션 | 소스 | 작성 내용 |
 |------|------|-----------|
@@ -76,7 +78,7 @@ git diff origin/develop...origin/<branch> -- <target>/   # 상세 diff
 | 4. 시연 | diff | 기능 단위 시나리오 테이블 + 파일별 코드 로직 설명 |
 | 5~7 | - | 빈 템플릿 (발표 후 작성용) |
 
-**prd_url 없을 때:**
+**기획문서 URL 없을 때:**
 - 1~3 섹션은 placeholder로 두고, 4 시연/로직만 코드 분석으로 작성
 
 #### 기존 문서 업데이트 모드
@@ -103,7 +105,7 @@ git diff origin/develop...origin/<branch> -- <target>/   # 상세 diff
 - 변경 의도를 한 줄 설명
 - 실제 변경된 코드를 코드 블록 매크로로 삽입 (핵심 로직만 발췌)
 
-### Step 5: 3. 스펙 설계 — FE 관점 보강 (prd_url 제공 시)
+### Step 5: 3. 스펙 설계 — FE 관점 보강 (기획문서 제공 시)
 
 기획문서의 요구사항과 실제 코드 diff를 대조하여:
 
