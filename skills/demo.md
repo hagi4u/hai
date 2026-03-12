@@ -1,6 +1,6 @@
 # 데모 발표자료 준비 스킬
 
-SFE 데모 발표를 위한 Confluence 문서 생성부터, 기획문서 기반 스펙 정리 + 코드 변경점 기반 시연/로직 작성까지 자동으로 수행하는 스킬입니다.
+개발 완료 후, `/설계`로 만든 설계문서에 코드 변경점 기반의 시연 시나리오와 로직 설명을 채워넣는 스킬입니다.
 
 ## 사용법
 
@@ -8,33 +8,39 @@ SFE 데모 발표를 위한 Confluence 문서 생성부터, 기획문서 기반 
 /demo
 ```
 
-입력하면 아래 정보를 순서대로 물어본다:
-
-1. **문서 타이틀** — Confluence 페이지 제목 (예: `[26.x] 홈 탭 이미지 대응`)
-   - 기존 문서 URL을 입력하면 업데이트 모드로 전환
-2. **Git branch** — 피처 브랜치명 (예: `feature/KREAM-40960`)
-3. **기획문서 URL** — Confluence 기획문서 URL (없으면 "없음" 또는 엔터)
-
-### 모드 판별
-
-- 타이틀에 `http`가 포함되면 → **기존 문서 업데이트** 모드
-- 그 외 → **새 문서 생성** 모드
-
-### 입력 예시
+입력하면 아래 정보를 물어본다:
 
 ```
 🤖 데모 발표자료를 준비할게요! 아래 정보를 알려주세요.
 
-1. 📄 문서 타이틀 (또는 기존 문서 URL):
+1. 📄 설계문서 URL (또는 타이틀):
 2. 🔀 Git branch:
-3. 📋 기획문서 URL (없으면 엔터):
+3. 📋 테크스펙 문서 URL (없으면 엔터):
 ```
 
+### 입력 예시
+
 ```
-사용자:
-1. [26.x] 홈 탭 이미지 대응
+1. https://wiki.navercorp.com/pages/viewpage.action?pageId=4888182406
 2. feature/KREAM-40960
-3. https://wiki.navercorp.com/pages/viewpage.action?pageId=1234
+3. https://wiki.navercorp.com/pages/viewpage.action?pageId=5678
+```
+
+### 모드 판별
+
+- 설계문서에 `http`가 포함되면 → **기존 문서 업데이트** (4. 시연 + 로직 설명 섹션만 채움)
+- 타이틀 텍스트면 → **새 문서 생성** (전체 템플릿 생성 + 4. 시연/로직 채움)
+
+## 워크플로우 위치
+
+```
+   /설계 → 1~3 섹션 작성
+   ↓
+   테크스펙 리뷰 (팀 미팅)
+   ↓
+   브랜치 생성 & 개발
+   ↓
+👉 /demo  ← 지금 여기 (4. 시연 + 로직 설명 작성)
 ```
 
 ## 작동 방식
@@ -50,137 +56,46 @@ git diff origin/develop...origin/<branch> -- <target>/   # 상세 diff
 ```
 - diff를 기능 단위로 그룹핑 (타입/컴포넌트/composable/스타일/로깅/설정)
 
-**B) 기획문서 분석** (URL 제공 시)
-- `confluence_get_page` (convert_to_markdown: true) → 기획문서 내용 파싱
-- 추출 대상:
-  - 프로젝트 배경 및 목적
-  - 요구사항 / 기능 정의
-  - 피그마 시안 URL 또는 이미지
-  - 기획자와 합의된 스펙 사항
-  - 제외 범위 (out of scope)
-
-**C) 기존 문서 읽기** (업데이트 모드일 때)
+**B) 설계문서 읽기**
 - `confluence_get_page` (convert_to_markdown: false) → 원본 storage HTML 확보
+- 기존 콘텐츠 위치 기록 (절대 건드리지 않을 섹션 파악)
 
-### Step 2: 문서 작성
+**C) 테크스펙 문서 읽기** (URL 제공 시)
+- `confluence_get_page` (convert_to_markdown: true) → 테크스펙 내용 파싱
+- 추출 대상:
+  - 합의된 기술 결정 사항
+  - 아키텍처/설계 방향
+  - 리뷰에서 나온 피드백 반영 사항
+- 시연 시나리오와 로직 설명에 테크스펙 맥락을 반영
 
-#### 새 문서 생성 모드
-
-`confluence_create_page`로 KREAM 스페이스에 문서 생성 (content_format: "storage")
-
-**기획문서 URL 있을 때 — 1~4 섹션 자동 작성:**
-
-| 섹션 | 소스 | 작성 내용 |
-|------|------|-----------|
-| 1. 배경 | 기획문서 | 요청 배경, 히스토리 요약. 참석자는 placeholder |
-| 2. Preview | 기획문서 | 피그마 시안 URL 링크 또는 이미지 참조 삽입 |
-| 3. 스펙 설계 | 기획문서 + diff | ㄱ) 기획 협의 내용 요약, ㄴ) 요구사항 테이블, ㄷ) FE 관점 리뷰 포인트 도출, ㄹ) 테크스펙 체크리스트 |
-| 4. 시연 | diff | 기능 단위 시나리오 테이블 + 파일별 코드 로직 설명 |
-| 5~7 | - | 빈 템플릿 (발표 후 작성용) |
-
-**기획문서 URL 없을 때:**
-- 1~3 섹션은 placeholder로 두고, 4 시연/로직만 코드 분석으로 작성
-
-#### 기존 문서 업데이트 모드
-
-⚠️ **반드시 섹션 단위 수정** (전체 덮어쓰기 금지)
-
-```
-1. 원본 HTML에서 수정 대상 섹션만 식별
-2. 해당 섹션만 새 HTML로 교체, 나머지 원본 유지
-3. confluence_update_page (content_format: "storage")
-```
-
-### Step 3: 시연 시나리오 작성
+### Step 2: 시연 시나리오 작성
 
 그룹핑된 기능 단위로 시연 테이블 작성:
 - 기능별로 관련 시나리오를 묶어서 작성 (atom 단위 분리 X, 5~7행 이내)
 - 시나리오 셀에는 `<ul>` 로 세부 항목 나열
 - 비고에는 기술적 구현 방식 간략 기재
 
-### Step 4: 로직 설명 작성
+### Step 3: 로직 설명 작성
 
 파일 단위로 코드 변경점을 구조화:
 - 파일별 h4 헤더 (`#### 1) 제목 — 파일경로`)
 - 변경 의도를 한 줄 설명
 - 실제 변경된 코드를 코드 블록 매크로로 삽입 (핵심 로직만 발췌)
+- 테크스펙 문서가 있으면, 리뷰에서 합의된 설계 결정이 코드에 어떻게 반영됐는지 연결
 
-### Step 5: 3. 스펙 설계 — FE 관점 보강 (기획문서 제공 시)
+### Step 4: Confluence 업데이트
 
-기획문서의 요구사항과 실제 코드 diff를 대조하여:
+⚠️ **반드시 섹션 단위 수정** (전체 덮어쓰기 금지)
 
-**ㄱ) 기획 리뷰 협의 내용**
-- 기획문서에서 결정된 스펙 사항 요약 (포함/제외 범위)
-
-**ㄴ) 요구사항 정리**
-- 기획문서의 요구사항을 화면/요구사항/비고 테이블로 구조화
-- diff에서 확인되는 실제 구현 범위와 매핑
-
-**ㄷ) FE 설계 리뷰 문의 내용**
-- 코드 분석 기반으로 FE 관점의 설계 결정 사항 정리
-- 예: 성능 고려사항, 에러 처리 전략, 접근성 대응 등
-
-**ㄹ) 테크스펙 사전체크**
-- diff에서 발견된 기술적 의사결정 포인트를 체크리스트로 정리
-
-### Step 6: Confluence 반영
-
-- 새 문서 → `confluence_create_page` (content_format: "storage")
-- 기존 문서 → `confluence_update_page` (content_format: "storage", 섹션 교체)
-- 완료 후 문서 URL을 사용자에게 반환
-
-## 표준 템플릿 (storage format)
-
-새 문서 생성 시 아래 HTML을 기본 골격으로 사용한다.
-
-```html
-<h2>1. 배경 (1m)</h2>
-<ul>
-  <li>요청 배경
-    <ul>
-      <li>(배경 내용)</li>
-    </ul>
-  </li>
-</ul>
-<h3>참석자</h3>
-<p>(참석자를 추가해주세요)</p>
-
-<h2>2. Preview (10m)</h2>
-<p>(피그마 시안이나 스크린샷을 첨부해주세요)</p>
-
-<h2>3. 스펙 설계</h2>
-<h3>ㄱ) 기획 리뷰 협의 내용</h3>
-<ul><li>(협의 내용)</li></ul>
-<h3>ㄴ) 요구사항 정리</h3>
-<table>
-  <colgroup><col /><col /><col /></colgroup>
-  <thead><tr><th><p>화면</p></th><th><p>요구사항</p></th><th><p>비고</p></th></tr></thead>
-  <tbody><tr><td><p /></td><td><p /></td><td><p /></td></tr></tbody>
-</table>
-<h3>ㄷ) FE 설계 리뷰 문의 내용</h3>
-<ul><li>(리뷰 문의 내용)</li></ul>
-<h3>ㄹ) 테크스펙 사전체크</h3>
-<ul><li>(사전체크 항목)</li></ul>
-
-<h2>4. 시연</h2>
-<!-- ⭐ 코드 분석 결과로 자동 작성 -->
-
-<h2>5. 셀프 회고 (5m)</h2>
-<table>
-  <colgroup><col /><col /><col /><col /></colgroup>
-  <thead><tr><th><p /></th><th><p>Keep</p></th><th><p>Problem</p></th><th><p>Try</p></th></tr></thead>
-  <tbody><tr><td><p /></td><td><p /></td><td><p /></td><td><p /></td></tr></tbody>
-</table>
-
-<h2>6. 피드백 및 개선사항</h2>
-<table>
-  <colgroup><col /><col /><col /></colgroup>
-  <thead><tr><th><p>작성자</p></th><th><p>피드백 및 개선사항</p></th><th><p>비고</p></th></tr></thead>
-  <tbody><tr><td><p /></td><td><p /></td><td><p /></td></tr></tbody>
-</table>
-
-<h2>7. Reference</h2>
 ```
+1. 원본 HTML에서 수정 대상 섹션만 식별
+   - 시연: <h2>4. 시연</h2> ~ 다음 <h2> 사이
+2. 해당 섹션만 새 HTML로 교체
+3. 나머지(1~3, 5~7) 원본 유지
+4. confluence_update_page (content_format: "storage")
+```
+
+- 완료 후 문서 URL을 사용자에게 반환
 
 ## Confluence storage format 규칙
 
@@ -190,13 +105,12 @@ git diff origin/develop...origin/<branch> -- <target>/   # 상세 diff
 | 중첩 리스트 | `<ul><li>...<ul><li>...</li></ul></li></ul>` |
 | 코드 블록 | `<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">ts</ac:parameter><ac:plain-text-body><![CDATA[...]]></ac:plain-text-body></ac:structured-macro>` |
 | 인라인 코드 | `<code>...</code>` |
-| 이미지 (첨부) | `<ac:image><ri:attachment ri:filename="..." /></ac:image>` — 기존 문서에서 절대 삭제하지 않기 |
+| 이미지 (첨부) | `<ac:image><ri:attachment ri:filename="..." /></ac:image>` — 절대 삭제하지 않기 |
 
 ## 주의사항
 
-- **기존 문서 업데이트 시**: 수정 대상 외 섹션은 절대 건드리지 않는다
-- **기존 문서 업데이트 시**: 첨부 이미지(`<ac:image>`) 참조를 보존한다
+- **1~3, 5~7 섹션은 절대 수정하지 않는다** (/설계에서 이미 작성됨)
+- 기존 첨부 이미지(`<ac:image>`) 참조를 보존한다
 - 시연 시나리오는 기능 단위로 그룹핑하여 5~7행 이내로 정리한다
 - 로직 설명의 코드는 핵심 변경점만 발췌한다 (전체 파일 복붙 X)
 - content_format은 항상 "storage" 사용 (markdown 금지)
-- 기획문서의 이미지/피그마 링크는 가능한 한 그대로 참조한다
