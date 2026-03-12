@@ -90,6 +90,8 @@ PRD(기획문서)를 기반으로 SFE 설계문서를 Confluence에 생성하는
 ## 표준 템플릿 (storage format)
 
 ```html
+<p><ac:structured-macro ac:name="toc" ac:schema-version="1"></ac:structured-macro></p>
+
 <h2>1. 배경 (1m)</h2>
 <ul>
   <li>요청 배경
@@ -99,51 +101,33 @@ PRD(기획문서)를 기반으로 SFE 설계문서를 Confluence에 생성하는
   </li>
 </ul>
 <h3>참석자</h3>
-<p>(참석자를 추가해주세요)</p>
+<p><ac:link><ri:user ri:userkey="8a298b9290e994ce0190fac01a830007"></ri:user></ac:link>  <ac:link><ri:user ri:userkey="8a298a51873a354c01883f8c8d0e00f3"></ri:user></ac:link> <ac:link><ri:user ri:userkey="8a298a518ab74c4c018ac86dd46408c8"></ri:user></ac:link> <ac:link><ri:user ri:userkey="8a298b92923e458b0192633d425a0059"></ri:user></ac:link> <ac:link><ri:user ri:userkey="8a298b92893f77ed018983fd2fdb003b"></ri:user></ac:link> <ac:link><ri:user ri:userkey="8af0661276ae12e80176baf367d40076"></ri:user></ac:link> <ac:link><ri:user ri:userkey="8aeba715978cd1930197998261dc000a"></ri:user></ac:link> <ac:link><ri:user ri:userkey="8a298a5191317c860191aefeaf870366"></ri:user></ac:link> </p>
+<p><br/></p>
 
 <h2>2. Preview (10m)</h2>
-<p>(PRD에서 추출한 피그마 링크 또는 placeholder)</p>
+<p>(PRD에서 추출한 피그마 링크 또는 widget 매크로)</p>
+<p><br/></p>
 
 <h2>3. 스펙 설계</h2>
 <h3>ㄱ) 기획 리뷰 협의 내용</h3>
 <ul><li>(PRD 기반 협의 내용)</li></ul>
 <h3>ㄴ) 요구사항 정리</h3>
-<table>
-  <colgroup><col /><col /><col /></colgroup>
-  <thead><tr><th><p>화면</p></th><th><p>요구사항</p></th><th><p>비고</p></th></tr></thead>
-  <tbody><tr><td><p /></td><td><p /></td><td><p /></td></tr></tbody>
-</table>
+<table class="wrapped"><colgroup><col/><col/><col/></colgroup><thead><tr><th><p>화면</p></th><th><p>요구사항</p></th><th><p>비고</p></th></tr></thead><tbody><tr><td><p><br/></p></td><td><p><br/></p></td><td><p><br/></p></td></tr></tbody></table>
 <h3>ㄷ) FE 설계 리뷰 문의 내용</h3>
 <ul><li>(FE 관점 리뷰 포인트)</li></ul>
 <h3>ㄹ) 테크스펙 사전체크</h3>
 <ul><li>(사전체크 항목)</li></ul>
 
 <h2>4. 시연</h2>
-<table>
-  <colgroup><col /><col /><col /></colgroup>
-  <thead><tr><th><p>기능</p></th><th><p>시나리오</p></th><th><p>비고</p></th></tr></thead>
-  <tbody><tr><td><p /></td><td><p /></td><td><p /></td></tr></tbody>
-</table>
+<table class="wrapped"><colgroup><col/><col/><col/></colgroup><thead><tr><th><p>기능</p></th><th><p>시나리오</p></th><th><p>비고</p></th></tr></thead><tbody><tr><td><p><br/></p></td><td><p><br/></p></td><td><p><br/></p></td></tr></tbody></table>
 <h3>로직 설명</h3>
-<table>
-  <colgroup><col /><col /><col /><col /></colgroup>
-  <thead><tr><th><p>기능</p></th><th><p>요구사항</p></th><th><p>로직</p></th><th><p>비고</p></th></tr></thead>
-  <tbody><tr><td><p /></td><td><p /></td><td><p /></td><td><p /></td></tr></tbody>
-</table>
+<p>(데모 시 작성)</p>
 
 <h2>5. 셀프 회고 (5m)</h2>
-<table>
-  <colgroup><col /><col /><col /><col /></colgroup>
-  <thead><tr><th><p /></th><th><p>Keep</p></th><th><p>Problem</p></th><th><p>Try</p></th></tr></thead>
-  <tbody><tr><td><p /></td><td><p /></td><td><p /></td><td><p /></td></tr></tbody>
-</table>
+<table class="wrapped"><colgroup><col/><col/><col/><col/></colgroup><thead><tr><th><p><br/></p></th><th><p>Keep</p></th><th><p>Problem</p></th><th><p>Try</p></th></tr></thead><tbody><tr><td><div class="content-wrapper"><p><ac:link><ri:user ri:userkey="8a298b9290e994ce0190fac01a830007"></ri:user></ac:link> </p></div></td><td><p><br/></p></td><td><p><br/></p></td><td><p><br/></p></td></tr></tbody></table>
 
 <h2>6. 피드백 및 개선사항</h2>
-<table>
-  <colgroup><col /><col /><col /></colgroup>
-  <thead><tr><th><p>작성자</p></th><th><p>피드백 및 개선사항</p></th><th><p>비고</p></th></tr></thead>
-  <tbody><tr><td><p /></td><td><p /></td><td><p /></td></tr></tbody>
-</table>
+<table class="wrapped relative-table" style="width: 56.0887%;"><colgroup><col style="width: 18.5612%;"/><col style="width: 46.9784%;"/><col style="width: 34.5324%;"/></colgroup><thead><tr><th><p>작성자</p></th><th><p>피드백 및 개선사항</p></th><th><p>비고</p></th></tr></thead><tbody><tr><td><div class="content-wrapper"><p><ac:link><ri:user ri:userkey="8a298a51873a354c01883f8c8d0e00f3"></ri:user></ac:link></p></div></td><td><p><br/></p></td><td><p><br/></p></td></tr><tr><td><div class="content-wrapper"><p><ac:link><ri:user ri:userkey="8aeba715978cd1930197998261dc000a"></ri:user></ac:link></p></div></td><td><div class="content-wrapper"><br/></div></td><td><p><br/></p></td></tr><tr><td><div class="content-wrapper"><p><ac:link><ri:user ri:userkey="8af0661276ae12e80176baf367d40076"></ri:user></ac:link>  </p></div></td><td><p><br/></p></td><td><p><br/></p></td></tr><tr><td><div class="content-wrapper"><p><ac:link><ri:user ri:userkey="8a298a518ab74c4c018ac86dd46408c8"></ri:user></ac:link></p></div></td><td><p><br/></p></td><td><p><br/></p></td></tr><tr><td><div class="content-wrapper"><p><ac:link><ri:user ri:userkey="8a298a5191317c860191aefeaf870366"></ri:user></ac:link> </p></div></td><td><p><br/></p></td><td><p><br/></p></td></tr><tr><td><div class="content-wrapper"><p><ac:link><ri:user ri:userkey="8a298b92923e458b0192633d425a0059"></ri:user></ac:link></p></div></td><td><p><br/></p></td><td><p><br/></p></td></tr><tr><td><div class="content-wrapper"><p><ac:link><ri:user ri:userkey="8a298b92893f77ed018983fd2fdb003b"></ri:user></ac:link></p></div></td><td><p><br/></p></td><td><p><br/></p></td></tr></tbody></table>
 
 <h2>7. Reference</h2>
 <ul><li><a href="(PRD URL)">(PRD 문서 제목)</a></li></ul>
