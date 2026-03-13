@@ -53,6 +53,11 @@ PRD(기획문서)를 기반으로 SFE 설계문서를 Confluence에 생성하는
 
 `confluence_create_page` (space_key: "KREAM", content_format: "storage")
 
+**parent 페이지 결정:**
+1. `Frontend Demo` (ID: 2905102834) 의 하위 페이지 목록을 조회한다
+2. 올해 연도에 해당하는 페이지를 찾는다 (예: "2026년 Demo")
+3. 해당 연도 페이지를 parent_id로 지정하여 그 하위에 문서를 생성한다
+
 기획문서 분석 결과로 1~3 섹션을 채우고, 4~7은 placeholder로 둔다.
 
 | 섹션 | 소스 | 작성 내용 |
